@@ -1,5 +1,7 @@
 from halotools.sim_manager import FakeSim
+from halotools.mock_observables import mean_radial_velocity_vs_r
 import numpy as np
+
 halocat = FakeSim()
 
 x = halocat.halo_table['halo_x']
