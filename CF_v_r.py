@@ -27,4 +27,5 @@ v_12 = mean_radial_velocity_vs_r(pos, vel, rbins_absolute=bin_edges, period=box_
 
 cout = np.c_[bin_centres, v_12]
 
+# save output
 np.savetxt(output_filename, cout)
