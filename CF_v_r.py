@@ -19,11 +19,12 @@ vz = data[:,5]
 pos = np.c_[x, y, z]
 vel = np.c_[vx, vy, vz]
 
-bin_edges = np.linspace(0, 150, 50)
+bin_edges = np.linspace(0, 150, 51)
+bin_centres = (bin_edges[1:] + bin_edges[:-1])/2
 box_size = 1500
 
 v_12 = mean_radial_velocity_vs_r(pos, vel, rbins_absolute=bin_edges, period=box_size)
 
-#cout = np.c_[rbins, v_12]
+cout = np.c_[bin_centres, v_12]
 
-np.savetxt(output_filename, v_12)
+np.savetxt(output_filename, cout)
