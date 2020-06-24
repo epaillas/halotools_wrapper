@@ -1,21 +1,29 @@
-from halotools.sim_manager import FakeSim
 from halotools.mock_observables import mean_radial_velocity_vs_r
 import numpy as np
 
-halocat = FakeSim()
+input_filename = '/home/epaillas/data/density_split/galaxy_cats/Real/\
+Galaxies_HOD_001_z0.57_Real.dat'
 
-x = halocat.halo_table['halo_x']
-y = halocat.halo_table['halo_y']
-z = halocat.halo_table['halo_z']
+output_filename = '/home/epaillas/data/density_split/den_cats/Real/\
+Galaxies_HOD_001_z0.57_Real_HaloTools.CF_gal_v_r'
 
-sample1 = np.vstack((x,y,z)).T
+data = np.genfromtxt(input_filename)
+x = data[:,0]
+y = data[:,1]
+z = data[:,2]
 
-vx = halocat.halo_table['halo_vx']
-vy = halocat.halo_table['halo_vy']
-vz = halocat.halo_table['halo_vz']
-velocities = np.vstack((vx,vy,vz)).T
+vx = data[:,3]
+vy = data[:,4]
+vz = data[:,5]
 
-rbins = np.logspace(-1, 1, 10)
-v_12 = mean_radial_velocity_vs_r(sample1, velocities, rbins_absolute=rbins, period=halocat.Lbox)
+pos = np.c_[x, y, z]
+vel = np.c_[vx, vy, vz]
 
-print(v_12)
+rbins = np.linspace(0, 150, 50)
+box_size = 1500
+
+v_12 = mean_radial_velocity_vs_r(pos, vel, rbins_absolute=rbins, period=box_size)
+
+cout = np.c_[rbins, v_12]
+
+np.savetxt(output_filename, cout)
